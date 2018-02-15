@@ -2,14 +2,22 @@ $(document).ready(onReady);
 
 function onReady(){
   console.log('Hello');
-
-  // addSong({
-  //   artist: 'John Rule', 
-  //   track: 'Always on Time', 
-  //   published: '1/1/1999', 
-  //   rank: 2
-  // });
+  getAllSongs();
 }
+  function getAllSongs() {
+    $.ajax({
+      type: 'GET',
+      url: '/songs'
+    })
+    .done(function(response){
+      console.log('Getting all songs:', response);
+      displaySongs(response);
+    })
+    .fail(function(error){
+      console.log(error);
+    })   
+  }
+
   function addSong(song) {
     $.ajax({
       type: 'POST',
@@ -17,7 +25,9 @@ function onReady(){
       data: song
     })
     .done(function(response){
-      $('#out-songs').text(response);
+      console.log('Added song:', song);
+      //clear non-existant input fields
+      getAllSongs();
     })
     .fail(function(error){
       console.log(error);
@@ -32,6 +42,7 @@ function onReady(){
     })
     .done(function (response) {
       console.log('Updated song rating');
+      getAllSongs();
     })
     .fail(function (error){
       console.log(error);
@@ -45,8 +56,16 @@ function onReady(){
     })
     .done(function (response){
       console.log('Deleted song');
+      getAllSongs();
     })
     .fail(function(error) {
       console.log(error);
     })
+  }
+
+  function displaySongs(songs) {
+    for (let song of songs) {
+      $('#out-songs').append(`<tr><td>${song.track}</td>
+        <td>${song.artist}</td><td>${song.published}</td><td>${song.rank}</td></tr>`);
+    }
   }
