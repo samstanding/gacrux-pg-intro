@@ -3,7 +3,12 @@ $(document).ready(onReady);
 function onReady(){
   console.log('Hello');
   getAllSongs();
-}
+
+  $('#btn-add').on('click', function(){
+    let song = getNewSong();
+    addSong(song);
+  })
+
   function getAllSongs() {
     $.ajax({
       type: 'GET',
@@ -16,6 +21,16 @@ function onReady(){
     .fail(function(error){
       console.log(error);
     })   
+  }
+
+  function getNewSong() {
+    const song = {
+      track: $('#in-track').val(),
+      artist: $('#in-artist').val(),
+      published: $('#in-date').val(),
+      rank: $('#in-rank').val(),
+    }
+    return song;
   }
 
   function addSong(song) {
@@ -66,6 +81,16 @@ function onReady(){
   function displaySongs(songs) {
     for (let song of songs) {
       $('#out-songs').append(`<tr><td>${song.track}</td>
-        <td>${song.artist}</td><td>${song.published}</td><td>${song.rank}</td></tr>`);
+        <td>${song.artist}</td><td>${formatDate(song.published)}</td><td>${song.rank}</td></tr>`);
     }
   }
+
+  function formatDate(isoDateStr) {
+    let result = ''
+    if (isoDateStr != null) {
+      let date = new Date(isoDateStr);
+      result = date.toLocaleDateString();
+    }
+    return result;
+  }
+}

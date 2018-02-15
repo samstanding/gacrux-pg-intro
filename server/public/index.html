@@ -9,10 +9,23 @@
   <script src="scripts/client.js"></script>
 </head>
 <body>
-  <h1>All the songs</h1>
-  <table>
-    <thead><tr><th>Track</th><th>Artist</th><th>Published</th><th>Rank</th></tr></thead>
-    <tbody id="out-songs"></tbody>
-  </table>
+  <h1>Songs!</h1>
+  <section>
+    <h2>Add a song</h2>
+    <form>
+      <input type="text" id="in-track" placeholder="Track Name">
+      <input type="text" id="in-artist" placeholder="Artist">
+      <input type="date" id="in-date">
+      <input type="number" id="in-rank" min=1 max=999>
+      <button id="btn-add">Add</button>
+    </form>
+  </section>
+  <section>
+    <h2>All the songs</h2>
+    <table>
+      <thead><tr><th>Track</th><th>Artist</th><th>Published</th><th>Rank</th></tr></thead>
+      <tbody id="out-songs"></tbody>
+    </table>
+  </section>
 </body>
 </html>
