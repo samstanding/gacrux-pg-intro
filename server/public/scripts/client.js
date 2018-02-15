@@ -4,7 +4,8 @@ function onReady(){
   console.log('Hello');
   getAllSongs();
 
-  $('#btn-add').on('click', function(){
+  $('#btn-add').on('click', function(event){
+    event.preventDefault();
     let song = getNewSong();
     addSong(song);
   })
@@ -33,6 +34,13 @@ function onReady(){
     return song;
   }
 
+  function clearAddForm() {
+    $('#in-track').val('');
+    $('#in-artist').val('');
+    $('#in-date').val('');
+    $('#in-rank').val('');
+  }
+
   function addSong(song) {
     $.ajax({
       type: 'POST',
@@ -41,7 +49,7 @@ function onReady(){
     })
     .done(function(response){
       console.log('Added song:', song);
-      //clear non-existant input fields
+      clearAddForm();
       getAllSongs();
     })
     .fail(function(error){
@@ -81,7 +89,8 @@ function onReady(){
   function displaySongs(songs) {
     for (let song of songs) {
       $('#out-songs').append(`<tr><td>${song.track}</td>
-        <td>${song.artist}</td><td>${formatDate(song.published)}</td><td>${song.rank}</td></tr>`);
+        <td>${song.artist}</td><td>${formatDate(song.published)}</td>
+        <td>${song.rank}</td></tr>`);
     }
   }
 
