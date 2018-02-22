@@ -68,6 +68,7 @@ router.put('/:id', (request, response) => {
 })
 
 router.post('/add', (request, response) => {
+  console.log(request.body);
   const song = request.body;
   console.log('Add song:', song);
 
